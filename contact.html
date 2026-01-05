@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SmartCare/contact</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+        integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.6.0/css/fontawesome.min.css"
+        integrity="sha384-NvKbDTEnL+A8F/AA5Tc5kmMLSJHUO868P+lDtTpJIeQdGYaUIuLr4lVGOEA1OcMy" crossorigin="anonymous">
+
+    <style>
+        /* nav section start */
+        .navbar {
+            padding: 10px 20px;
+        }
+
+        .navbar-brand img {
+            height: 40px;
+            /* Adjust the height of the logo */
+        }
+
+        .navbar .nav-link {
+            font-size: 20px;
+            /* Adjust the font size */
+            color: #2193D1;
+            font-weight: 700;
+            margin-right: 20px;
+        }
+
+
+        /* underlines after heading  */
+        .underline-text {
+            display: inline-block;
+            /*  Make it behave like an inline element but allow for block-level properties */
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        .underline-text::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            width: 100%;
+            height: 5px;
+            background-color: #75a7be;
+            transition: all 0.3s ease;
+            border-radius: 50px;
+        }
+
+        .underline-text:hover::after {
+            width: 50%;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        /* contact_facility  */
+        .card {
+            border-radius: 10px;
+            background-color: #75A7BE;
+            color: white;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            font-size: 20px;
+        }
+
+        .card:hover {
+            transform: scale(1.05);
+        }
+
+        .btn-primary {
+            background-color: white;
+            color: #2193D1;
+            font-weight: bolder;
+            border: none;
+        }
+
+        .btn-primary:hover {
+            background-color: #EAEDEF;
+            color: #2193D1;
+        }
+
+
+        /* appointment section start  */
+        .appointment-container {
+            background-color: #ffffff;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+            max-width: 900px;
+            margin: 50px auto;
+            text-align: center;
+        }
+
+        .appointment-container .form-title {
+            text-align: center;
+            font-weight: bold;
+            font-size: 24px;
+            color: #2193D1;
+            margin-bottom: 20px;
+        }
+
+        /* Input styling to match the exact design */
+        .appointment-container .form-control,
+        .form-select,
+        textarea {
+            background-color: #EAEDEF;
+            border: 1px solid #e0e0e0;
+            border-radius: 15px;
+            height: 45px;
+            font-size: 16px;
+            padding: 10px 15px;
+            color: #989898;
+        }
+
+        .appointment-container textarea {
+            height: auto;
+            resize: none;
+        }
+
+        .appointment-container .btn-proceed {
+            background-color: #75A7BE;
+            color: white;
+            border: none;
+            border-radius: 15px;
+            width: 50%;
+            height: 45px;
+            font-size: 16px;
+            font-weight: 500;
+        }
+
+        .appointment-container .btn-proceed:hover {
+            background-color: #60889a;
+            color: white;
+            font-weight: 700;
+        }
+
+        /* map container  */
+        .info-box {
+            background-color: #EAEDEF;
+            padding: 20px;
+            border-radius: 5px;
+            color: #2193D1;
+        }
+
+        .icon {
+            font-size: 20px;
+            margin-right: 10px;
+        }
+
+        .social-media a {
+            text-decoration: none;
+            color: #2193D1;
+            font-size: 30px;
+            margin-right: 15px;
+        }
+
+        .map-container {
+            height: 100%;
+        }
+
+
+        /* FAQs  */
+        .faq-container .accordion-button::after {
+            font-size: 30px;
+        }
+
+        .accordion-button {
+            background-color: #60889a;
+            color: white;
+            font-weight: bold;
+            font-size: 20px;
+        }
+
+        .accordion-body {
+            background-color: #F8F9FA;
+            color: #75A7BE;
+            font-size: 18px;
+        }
+
+
+        /* footer section starts  */
+        .footer {
+            padding: 40px 0;
+            background-color: #F8F9FA;
+            margin-top: 80px;
+        }
+
+        .footer h5 {
+            font-size: 16px;
+            font-weight: bold;
+            color: #75A7BE;
+        }
+
+        .footer p,
+        .footer a {
+            color: #77808B;
+            font-size: 14px;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+
+        .footer-icons a {
+            display: inline-block;
+            margin-right: 10px;
+            color: white;
+            background-color: #75A7BE;
+            width: 30px;
+            height: 30px;
+            line-height: 30px;
+            text-align: center;
+            border-radius: 50%;
+            text-decoration: none;
+        }
+
+        /* footer section ends  */
+    </style>
+</head>
+
+<body>
+
+    <!-- Bootstrap Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+            <!-- Logo on the left -->
+            <a class="navbar-brand" href="#">
+                <img src="assets/LogoTag.png" alt="Logo">
+            </a>
+
+            <!-- Toggler for mobile view -->
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <!-- Navbar links, justified to the right -->
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto"> <!-- ms-auto for right alignment -->
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="about.html">About Us</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="service.html">Services</a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="service.html">All</a></li>
+                            <li><a class="dropdown-item" href="general-practice.html">General Practice</a></li>
+                            <li><a class="dropdown-item" href="#"> Internal Medicine</a></li>
+                            <li><a class="dropdown-item" href="#"> Family Medicine</a></li>
+                            <li><a class="dropdown-item" href="#"> Pediatrics</a></li>
+                            <li><a class="dropdown-item" href="#"> Gynecology</a></li>
+                            <li><a class="dropdown-item" href="#"> Dentistry</a></li>
+                            <li><a class="dropdown-item" href="#"> Pathology</a></li>
+                            <li><a class="dropdown-item" href="#"> Home Healthcare</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="doctors.html">Doctors</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="#">Contacts</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+
+    <!-- carousel  -->
+    <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <img src="https://img.freepik.com/free-vector/doctors-office-with-desktop_603843-2562.jpg?uid=R189197379&ga=GA1.1.208303102.1739859179&semt=ais_hybrid" class="d-block w-100" alt="...">
+            </div>
+        </div>
+    </div>
+
+    <!-- contact_facility -->
+    <div class="container my-5">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="card p-3 mb-4">
+                    <div class="row mb-4">
+                        <div class="col-md-4">
+                            <img src="assets/cont1.png" height="92px" width="92px" alt="">
+                        </div>
+                        <div class="col">
+                            <h5><b>Get Care</b></h5>
+                            <p>Explore SmartCare options, find the best doctors and schedule.</p>
+                        </div>
+                    </div>
+                    <a href="#" class="btn btn-primary">Consult Doctor & Schedule</a>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card p-3 mb-4">
+                    <div class="row mb-4">
+                        <div class="col-md-4">
+                            <img src="assets/cont2.png" height="92px" width="92px" alt="">
+                        </div>
+                        <div class="col">
+                            <h5><b>Phone Directory</b></h5>
+                            <p>search phone directory for program and service contact.</p>
+                        </div>
+                    </div>
+                    <a href="#" class="btn btn-primary">View Phone Directory</a>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card p-3 mb-4">
+                    <div class="row mb-4">
+                        <div class="col-md-4">
+                            <img src="assets/cont3.png" height="92px" width="92px" alt="">
+                        </div>
+                        <div class="col">
+                            <h5><b>Billing & Insurance</b></h5>
+                            <p>Contact Us for billing, insurance abd FAQs assistance.</p>
+                        </div>
+                    </div>
+                    <a href="#" class="btn btn-primary">View Billing & Insurance</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Appointment   -->
+    <div class="appointment-container">
+        <div class="underline-text form-title">
+            <h1 style="color: #2193D1;">Make Appointment</h1>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <img src="assets/contact_appointment.png" alt="Doctor and Patient" class="img-fluid rounded">
+            </div>
+            <div class="col-md-6">
+                <h4 class="mb-4" style="color: #75A7BE; font-weight: 700;">Book Your Slot</h4>
+                <form>
+                    <div class="mb-3">
+                        <input type="text" class="form-control" placeholder="Full Name*">
+                    </div>
+                    <div class="mb-3">
+                        <input type="tel" class="form-control" placeholder="Phone*">
+                    </div>
+                    <div class="mb-3">
+                        <input type="email" class="form-control" placeholder="Your Email*">
+                    </div>
+                    <div class="mb-3 row">
+                        <div class="col">
+                            <select class="form-select">
+                                <option selected disabled>Select Service</option>
+                                <option value="1">General Checkup</option>
+                                <option value="2">Consultation</option>
+                                <option value="3">Follow-up</option>
+                            </select>
+                        </div>
+                        <div class="col">
+                            <input type="date" class="form-control">
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <textarea class="form-control" rows="3" placeholder="Message"></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-proceed">Proceed</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- map section  -->
+    <div class="container map-container my-5">
+        <div class="row d-flex align-items-stretch">
+            <!-- Left Section -->
+            <div class="col-md-6 d-flex flex-column"
+                style="background-color: #75A7BE; color: white; border-radius: 15px; padding: 20px;">
+                <h2><b>Media Enquiries</b></h2>
+                <div class="info-box mb-4">
+                    <p style="font-size: 24px;"><span class="icon">&#128337;</span><strong>Office Hours</strong><br>
+                        <span style="font-size: 20px;">Monday-Friday 8:00 am - 6:00 pm</span><br>
+                        <span style="font-size: 20px;">Saturday-Sunday 10:00 am - 3:00 pm</span></p>
+                    <p style="font-size: 24px;"><span class="icon">&#128222;</span><strong>Call Hours</strong><br><span style="font-size: 20px;">6:00 am - 10:00 pm</span></p>
+                    <p style="font-size: 24px;"><span class="icon">&#128205;</span><strong>Location</strong><br><span style="font-size: 20px;">Location is Deira, Dubai.</span></p>
+                    <p style="font-size: 24px;"><span class="icon">&#9993;</span><strong>Email</strong><br><span style="font-size: 20px;">SmartCare@mail.com</span></p>
+                </div>
+                <h2><b>Social Media</b></h2>
+                <div class="info-box social-media">
+                    <a href="#"><i class="fa-brands fa-facebook"></i></a>
+                    <a href="#"><i class="fa-brands fa-square-x-twitter"></i></a>
+                    <a href="#"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="#"><i class="fa-brands fa-linkedin"></i></a>
+                </div>
+            </div>
+
+            <!-- Right Section (Map) -->
+            <div class="col-md-6">
+                <iframe
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3608.1978809729185!2d55.3163559!3d25.263928!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3e5f5cd04a2e8289%3A0x4f814954024e3ae8!2sHTK%20Medical%20Center!5e0!3m2!1sen!2sin!4v1739965301028!5m2!1sen!2sin"
+                    width="100%" height="100%" style="border: 5px solid #75A7BE; border-radius: 15px;"
+                    allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- FAQ Section -->
+    <div class="faqs-container" style=" text-align: center;">
+        <div class="underline-text">
+            <h1 style="color: #2193D1;">FAQs</h1>
+        </div>
+        <div class="faq-container my-5 text-start" style="padding: 0 10rem;">
+            <div class="accordion" id="faqAccordion">
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="headingOne">
+                        <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#faqOne" aria-expanded="true" aria-controls="faqOne">
+                            What services do you provide?
+                        </button>
+                    </h2>
+                    <div id="faqOne" class="accordion-collapse collapse show" aria-labelledby="headingOne"
+                        data-bs-parent="#faqAccordion">
+                        <div class="accordion-body">
+                            polyclinics are multi-specialty healthcare facilities that offer a wide range of medical
+                            services, primarily focusing on outpatient care. They are designed to provide accessible
+                            and
+                            comprehensive healthcare to the community, often serving as a first point of contact for
+                            patients seeking medical attention.
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="headingTwo">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#faqTwo" aria-expanded="false" aria-controls="faqTwo">
+                            Do you accept walk-in appointments?
+                        </button>
+                    </h2>
+                    <div id="faqTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo"
+                        data-bs-parent="#faqAccordion">
+                        <div class="accordion-body">
+                            Yes, we do. However, we recommend booking an appointment to avoid waiting.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- footer section starts -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <!-- About Section -->
+                <div class="col-md-3">
+                    <img src="assets/logo.jpg" height="80px" width="90px" style="margin-bottom: 10px;" alt="">
+                    <h5>SmartCare Polyclinic</h5>
+                    <p>
+                        SmartCare Polyclinic is dedicated to providing comprehensive and high-quality healthcare
+                        services in Deira, Dubai.
+                    </p>
+                    <p>Design and Developed by <a href="https://centurymedia360.com/" target="_blank">CenturyMedia360</a></p>
+                </div>
+
+                <!-- Get in Touch Section -->
+                <div class="col-md-3">
+                    <h5>Get in Touch</h5>
+                    <p>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                            <g fill="none" stroke="#75A7BE" stroke-linejoin="round" stroke-width="2">
+                                <path d="M13 9a1 1 0 1 1-2 0a1 1 0 0 1 2 0Z" />
+                                <path
+                                    d="M17.5 9.5c0 3.038-2 6.5-5.5 10.5c-3.5-4-5.5-7.462-5.5-10.5a5.5 5.5 0 1 1 11 0Z" />
+                            </g>
+                        </svg> Location is Deira, Dubai, UAE.
+                    </p>
+                    <p>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                            <path fill="#75A7BE"
+                                d="M22 6c0-1.1-.9-2-2-2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2zm-2 0l-8 5l-8-5zm0 12H4V8l8 5l8-5z" />
+                        </svg> info@SmartCare.com
+                    </p>
+                    <p>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                            <path fill="#75A7BE"
+                                d="M6.54 5c.06.89.21 1.76.45 2.59l-1.2 1.2c-.41-1.2-.67-2.47-.76-3.79zm9.86 12.02c.85.24 1.72.39 2.6.45v1.49c-1.32-.09-2.59-.35-3.8-.75zM7.5 3H4c-.55 0-1 .45-1 1c0 9.39 7.61 17 17 17c.55 0 1-.45 1-1v-3.49c0-.55-.45-1-1-1c-1.24 0-2.45-.2-3.57-.57a.8.8 0 0 0-.31-.05c-.26 0-.51.1-.71.29l-2.2 2.2a15.15 15.15 0 0 1-6.59-6.59l2.2-2.2c.28-.28.36-.67.25-1.02A11.4 11.4 0 0 1 8.5 4c0-.55-.45-1-1-1" />
+                        </svg> +971-13-1234567
+                    </p>
+                </div>
+
+                <!-- Service Links -->
+                <div class="col-md-2">
+                    <h5>Service</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#">General Practice</a></li>
+                        <li><a href="#">Internal Medicine</a></li>
+                        <li><a href="#">Family Medicine</a></li>
+                        <li><a href="#">Pediatrics</a></li>
+                        <li><a href="#">Gynecology</a></li>
+                        <li><a href="#">Dentistry</a></li>
+                        <li><a href="#">Pathology</a></li>
+                        <li><a href="#">Home Healthcare</a></li>
+                    </ul>
+                </div>
+
+                <!-- Company Links -->
+                <div class="col-md-2">
+                    <h5>Company</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="about.html">About</a></li>
+                        <li><a href="service.html">Services</a></li>
+                        <li><a href="doctors.html">Doctors</a></li>
+                        <li><a href="#">Contacts</a></li>
+                    </ul>
+                </div>
+
+                <!-- Social Media and Text -->
+                <div class="col-md-2">
+                    <div class="footer-icons">
+                        <a href="#">in</a>
+                        <a href="#">X</a>
+                        <a href="#">lg</a>
+                    </div>
+                    <p>Stay connected with us for expert healthcare services in Deira, Dubai.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- footer section ends -->
+
+
+    <!-- Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+</body>
+
+</html>

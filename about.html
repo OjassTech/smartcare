@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SmartCare/about</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.6.0/css/fontawesome.min.css" integrity="sha384-NvKbDTEnL+A8F/AA5Tc5kmMLSJHUO868P+lDtTpJIeQdGYaUIuLr4lVGOEA1OcMy" crossorigin="anonymous">
+
+    <style>
+        body {
+            scroll-behavior: smooth;
+            overflow-x: hidden;
+            margin: 0;
+        }
+
+        /* Navbar styles */
+        .navbar {
+            padding: 10px 20px;
+        }
+
+        .navbar-brand img {
+            height: 40px;
+            /* Adjust the height of the logo */
+        }
+
+        .navbar .nav-link {
+            font-size: 20px;
+            /* Adjust the font size */
+            color: #2193D1;
+            font-weight: 700;
+            margin-right: 20px;
+        }
+
+        /* Sidebar styles */
+        .sidebar {
+            width: 270px;
+            padding: 15px;
+            position: sticky;
+            top: 100px;
+            /* Adjust this value to position it below the carousel */
+            left: 20px;
+            border-radius: 10px;
+        }
+
+        .sidebar a {
+            display: block;
+            color: white;
+            padding: 12px;
+            margin: 5px 0;
+            text-decoration: none;
+            font-weight: bold;
+            border-radius: 30px;
+            text-align: center;
+            background-color: #75A7BE;
+        }
+
+        .sidebar a:hover,
+        .sidebar a.active {
+            background-color: #476E88;
+            color: white;
+            font-weight: bold;
+        }
+
+        /* Content styles */
+        .content {
+            margin-left: 320px;
+            /* Adjust for sidebar */
+            margin-top: -375px;
+            /* Adjust as needed */
+        }
+
+        /* Section styles */
+        .section {
+            padding: 50px 0;
+            border-bottom: 1px solid #ddd;
+            color: #585858;
+        }
+
+        .title {
+            color: #2193D1;
+            font-weight: bold;
+        }
+
+        .highlight {
+            color: #D90C0D;
+            font-weight: bold;
+        }
+
+        .checkmark {
+            color: #75a7be;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+
+        .about-container {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+            color: #585858;
+        }
+
+        .about-container img {
+            width: 300px;
+            border-radius: 10px;
+        }
+
+        .core-visuals-container {
+            display: flex;
+            justify-content: space-around;
+            text-align: center;
+        }
+
+        .core-visuals-container img {
+            height: 100px;
+            width: 100px;
+        }
+
+        .mission-container,
+        .vision-container {
+            display: flex;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .mission-box,
+        .vision-box {
+            background: #75A7BE;
+            padding: 20px;
+            border-radius: 10px;
+            width: 100%;
+            text-align: start;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .mission-box,
+        .vision-box h1 {
+            color: #585858;
+        }
+
+        .toggle-btn {
+            background-color: #2193D1;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            border-radius: 5px;
+            margin-top: 10px;
+        }
+
+        .toggle-btn:hover {
+            background-color: #0056b3;
+        }
+
+        .description {
+            width: 720px;
+            margin-top: 60px;
+            padding: 10px;
+            background: white;
+            border-radius: 5px;
+            box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .mission-container .description {
+            width: 400px;
+            margin-top: 10px;
+        }
+
+        /* Footer styles */
+        .footer {
+            padding: 40px 0;
+            background-color: #F8F9FA;
+            margin-top: 80px;
+        }
+
+        .footer h5 {
+            font-size: 16px;
+            font-weight: bold;
+            color: #75A7BE;
+        }
+
+        .footer p,
+        .footer a {
+            color: #77808B;
+            font-size: 14px;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+
+        .footer-icons a {
+            display: inline-block;
+            margin-right: 10px;
+            color: white;
+            background-color: #75A7BE;
+            width: 30px;
+            height: 30px;
+            line-height: 30px;
+            text-align: center;
+            border-radius: 50%;
+            text-decoration: none;
+        }
+
+        /* Responsive styles */
+        @media (max-width: 768px) {
+            .sidebar {
+                display: none;
+                /* Hide sidebar on smaller devices */
+            }
+
+            .content {
+                margin-left: 0;
+                /* Full width for content */
+                margin-top: 20px;
+                /* Adjust top margin */
+            }
+
+            .about-container {
+                flex-direction: column;
+                /* Stack elements vertically */
+                align-items: center;
+                /* Center align */
+            }
+
+            .about-container img {
+                width: 100%;
+                /* Make image responsive */
+                max-width: 300px;
+                /* Limit max width */
+            }
+
+            .description {
+                max-width: 350px;
+            }
+
+            .core-visuals-container {
+                flex-direction: column;
+                /* Stack visuals vertically */
+            }
+
+            .core-visuals-container img {
+                width: 80%;
+                /* Make visuals responsive */
+                max-width: 100px;
+                /* Limit max width */
+            }
+        }
+
+        @media (max-width: 568px) {
+            .description {
+                max-width: 200px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Bootstrap Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">
+                <img src="assets/LogoTag.png" alt="Logo">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="#">About Us</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="service.html">Services</a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="service.html">All</a></li>
+                            <li><a class="dropdown-item" href="general-practice.html">General Practice</a></li>
+                            <li><a class="dropdown-item" href="#"> Internal Medicine</a></li>
+                            <li><a class="dropdown-item" href="#"> Family Medicine</a></li>
+                            <li><a class="dropdown-item" href="#"> Pediatrics</a></li>
+                            <li><a class="dropdown-item" href="#"> Gynecology</a></li>
+                            <li><a class="dropdown-item" href="#"> Dentistry</a></li>
+                            <li><a class="dropdown-item" href="#"> Pathology</a></li>
+                            <li><a class="dropdown-item" href="#"> Home Healthcare</a></li>
+                        </ul>
+                    </li class="nav-item">
+                    <a class="nav-link" href="doctors.html">Doctors</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="contact.html">Contacts</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- carousel -->
+    <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <img src="assets/about_carousel.png" class="d-block w-100" alt="...">
+            </div>
+        </div>
+    </div>
+
+    <!-- main content -->
+    <div class="container">
+        <!-- left sidebar -->
+        <div class="sidebar">
+            <a href="#about" class="nav-link">About SmartCare</a>
+            <a href="#services" class="nav-link">Services We Provide</a>
+            <a href="#visuals" class="nav-link">Our Core Visuals</a>
+            <a href="#choice" class="nav-link">Right Choice</a>
+            <a href="#vision" class="nav-link">Our Vision</a>
+            <a href="#mission" class="nav-link">Our Mission</a>
+        </div>
+
+        <!-- right side content -->
+        <div class="content">
+            <!-- about section -->
+            <div id="about" class="section" style="text-align: justify;">
+                <h5 class="highlight">About Us</h5>
+                <h2 class="title mb-4">About SmartCare</h2>
+                <div class="about-container">
+                    <div>
+                        <p><span class="checkmark">✓</span>Health Education Programs: Offering workshops and resources to empower about health</p>
+                        <p><span class="checkmark">✓</span>Preventive Care Initiatives: Implementing programs focused on disease prevention and health promotion.</p>
+                        <p><span class="checkmark">✓</span>Telemedicine Services: Facilitating remote consultations to ensure continuous care for patients.</p>
+                        <p><span class="checkmark">✓</span>Emergency Services: Providing prompt and efficient care for urgent medical situations.</p>
+                        <p><span class="checkmark">✓</span>Community Outreach: Engaging in activities aimed at improving public health and well-being.</p>
+                    </div>
+                    <img src="assets/about_ab.png" style="margin: 10px 0;" alt="Doctor Image">
+                </div>
+                <p>SmartCare Polyclinic, established in Dubai, is dedicated to providing accessible and high-quality
+                    healthcare services to the community. Our mission is to deliver comprehensive medical care that
+                    prioritizes patient well-being, ensuring that every individual receives personalized attention and
+                    effective treatment. We are committed to fostering a healthier society by offering a range of
+                    medical services designed to meet the diverse needs of our patients.</p>
+                <br>
+                <p>At SmartCare, we believe in building strong, vibrant communities through health and wellness
+                    initiatives, aiming to make a positive impact on the lives of those we serve. Our vision extends
+                    beyond treating ailments; we strive to enhance the overall quality of life for our patients,
+                    contributing to a happier and healthier society.</p>
+            </div>
+
+            <!-- services -->
+            <div id="services" class="section">
+                <h2 class="title mb-4">Services We Provide</h2>
+                <p>SmartCare Polyclinic in Dubai offers a comprehensive range of medical services to meet the diverse
+                    healthcare needs of the community. Here are five key aspects of their offerings:</p>
+                <p><span class="checkmark">✓</span> <b>General Practice:</b> SmartCare provides primary healthcare
+                    services, addressing a wide array of health concerns and serving as the first point of contact for
+                    patients seeking medical attention.</p>
+                <p><span class="checkmark">✓</span> <b>Specialized Medical Services:</b> The clinic offers specialized
+                    care in areas such as Internal Medicine, Family Medicine, Pediatrics, and Gynecology, ensuring
+                    patients receive expert treatment for various health conditions.</p>
+                <p><span class="checkmark">✓</span> <b>Dental Care:</b> SmartCare includes a dedicated dental
+                    department, offering services ranging from routine check-ups to advanced dental procedures,
+                    promoting oral health and hygiene.</p>
+                <p><span class="checkmark">✓</span> <b>Diagnostic Services:</b> The clinic provides comprehensive
+                    pathology services, facilitating accurate diagnosis and effective treatment planning for patients.
+                </p>
+                <p><span class="checkmark">✓</span> <b>Home Healthcare:</b> SmartCare extends its services beyond the
+                    clinic by offering home healthcare, ensuring patients receive necessary medical attention in the
+                    comfort of their homes.</p>
+            </div>
+
+            <!-- visuals -->
+            <div id="visuals" class="section">
+                <h2 class="title mb-5">Our Core Visuals</h2>
+                <div class="core-visuals-container">
+                    <div>
+                        <img src="assets/visual1.png" alt="visual1">
+                        <h5>Innovative Care</h5>
+                        <p>Foster a culture of innovation that prioritizes patient care.</p>
+                    </div>
+                    <div>
+                        <img src="assets/visual2.png" alt="visual2">
+                        <h5>Compassionate Care</h5>
+                        <p>Create an environment of compassion in all interactions.</p>
+                    </div>
+                    <div>
+                        <img src="assets/visual3.png" alt="visual3">
+                        <h5>Integrity in Practice</h5>
+                        <p>Uphold the highest standards of ethics and professionalism.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- right choice -->
+            <div id="choice" class="section">
+                <h2 class="title mb-4">Why We're the Right Care for You</h2>
+                <p><span class="checkmark">✓</span> <strong>Advanced Healthcare Solutions</strong><br>
+                    <span>Equipped with state-of-the-art technology to deliver precise diagnostics and effective
+                        treatments tailored to the needs of our Deira community.</span>
+                </p>
+                <p><span class="checkmark">✓</span> <strong>Comprehensive Services</strong><br>
+                    <span>Offering a wide array of healthcare solutions, including General Practice, Internal
+                        Medicine, Family Medicine, Pediatrics, Gynecology, Dentistry, Pathology, and Home
+                        Healthcare—all conveniently located under one roof for holistic medical care.</span>
+                </p>
+                <p><span class="checkmark">✓</span> <strong>Experienced Team</strong><br>
+                    <span>Our dedicated team of expert doctors, each with over 15 years of experience, is committed
+                        to providing personalized care that ensures the best possible medical outcomes for our
+                        patients.</span>
+                </p>
+                <p><span class="checkmark">✓</span> <strong>Patient-Centric Approach</strong><br>
+                    <span>Your health and comfort are our top priorities. We customize every experience to meet your
+                        unique needs, ensuring a supportive and caring environment.</span>
+                </p>
+                <p><span class="checkmark">✓</span> <strong>Trusted Heritage</strong><br>
+                    <span>Established in 1978, we have built a legacy of exceptional medical care, serving the Deira
+                        community with dedication and expertise for decades.</span>
+                </p>
+            </div>
+
+            <!-- vision section -->
+            <div id="vision" class="section">
+                <h2 class="title">Our Vision</h2>
+                <div class="vision-container">
+                    <div class="vision-box">
+                        <div class="card mb-3">
+                            <div class="row g-0 p-4">
+                                <div class="col-md-8">
+                                    <div class="card-body">
+                                        <h1 class="card-title">Vision</h1>
+                                        <p class="card-text">Click below to see our vision for healthcare services.
+                                        </p>
+                                        <button class="toggle-btn" onclick="toggleDescription('visionDesc')">Learn
+                                            More</button>
+                                        <div id="visionDesc" class="description" style="display: none;">
+                                            <p>
+                                                At SmartCare Polyclinic, our vision is to provide exceptional
+                                                healthcare services in Deira, Dubai, by:
+                                            </p>
+                                            <ul>
+                                                <li>Becoming the preferred choice for comprehensive medical care,
+                                                    including General Practice, Internal Medicine, Family Medicine,
+                                                    Pediatrics, Gynecology, Dentistry, Pathology, and Home
+                                                    Healthcare.</li>
+                                                <li>Embracing innovation and advanced technology to enhance patient
+                                                    outcomes and experiences.</li>
+                                                <li>Cultivating a compassionate environment that prioritizes the
+                                                    health and well-being of our diverse community.</li>
+                                                <li>Building strong, trusting relationships with our patients and
+                                                    their families, ensuring a commitment to integrity and
+                                                    excellence in all we do.</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <img src="assets/our_vision.png" class="img-fluid rounded-start" alt="...">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- mission section -->
+            <div id="mission" class="section">
+                <h2 class="title">Our Mission</h2>
+                <div class="mission-container">
+                    <div class="mission-box">
+                        <div class="card mb-3">
+                            <div class="row g-0 p-4">
+                                <div class="col-md-4">
+                                    <img src="assets/our_mission.png" class="img-fluid rounded-start" alt="...">
+                                </div>
+                                <div class="col-md-8">
+                                    <div class="card-body">
+                                        <h1 class="card-title">Mission</h1>
+                                        <p class="card-text">Click below to see our mission for healthcare services.
+                                        </p>
+                                        <button class="toggle-btn" onclick="toggleDescription('missionDesc')">Learn
+                                            More</button>
+                                        <div id="missionDesc" class="description" style="display: none;">
+                                            <p>
+                                                At SmartCare Polyclinic, our mission is to deliver comprehensive and
+                                                accessible healthcare services, including General Practice, Internal
+                                                Medicine, Family Medicine, Pediatrics, Gynecology, Dentistry,
+                                                Pathology, and Home Healthcare. We strive to:
+                                            </p>
+                                            <ul>
+                                                <li>Utilize advanced technology and evidence-based practices to
+                                                    ensure accurate diagnostics and effective treatments.</li>
+                                                <li>Foster a compassionate environment where every patient feels
+                                                    valued and understood.</li>
+                                                <li>Empower our experienced team to provide personalized care
+                                                    tailored to the unique needs of each individual.</li>
+                                                <li>Build lasting relationships with our patients and the community,
+                                                    ensuring trust and integrity in all our interactions.</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- footer section starts -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <!-- About Section -->
+                <div class="col-md-3">
+                    <img src="assets/logo.jpg" height="80px" width="90px" style="margin-bottom: 10px;" alt="">
+                    <h5>SmartCare Polyclinic</h5>
+                    <p>
+                        SmartCare Polyclinic is dedicated to providing comprehensive and high-quality healthcare
+                        services in Deira, Dubai.
+                    </p>
+                    <p>Design and Developed by <a href="https://centurymedia360.com/" target="_blank">CenturyMedia360</a></p>
+                </div>
+
+                <!-- Get in Touch Section -->
+                <div class="col-md-3">
+                    <h5>Get in Touch</h5>
+                    <p>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                            <g fill="none" stroke="#75A7BE" stroke-linejoin="round" stroke-width="2">
+                                <path d="M13 9a1 1 0 1 1-2 0a1 1 0 0 1 2 0Z" />
+                                <path
+                                    d="M17.5 9.5c0 3.038-2 6.5-5.5 10.5c-3.5-4-5.5-7.462-5.5-10.5a5.5 5.5 0 1 1 11 0Z" />
+                            </g>
+                        </svg> Location is Deira, Dubai, UAE.
+                    </p>
+                    <p>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                            <path fill="#75A7BE"
+                                d="M22 6c0-1.1-.9-2-2-2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2zm-2 0l-8 5l-8-5zm0 12H4V8l8 5l8-5z" />
+                        </svg> info@SmartCare.com
+                    </p>
+                    <p>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                            <path fill="#75A7BE"
+                                d="M6.54 5c.06.89.21 1.76.45 2.59l-1.2 1.2c-.41-1.2-.67-2.47-.76-3.79zm9.86 12.02c.85.24 1.72.39 2.6.45v1.49c-1.32-.09-2.59-.35-3.8-.75zM7.5 3H4c-.55 0-1 .45-1 1c0 9.39 7.61 17 17 17c.55 0 1-.45 1-1v-3.49c0-.55-.45-1-1-1c-1.24 0-2.45-.2-3.57-.57a.8.8 0 0 0-.31-.05c-.26 0-.51.1-.71.29l-2.2 2.2a15.15 15.15 0 0 1-6.59-6.59l2.2-2.2c.28-.28.36-.67.25-1.02A11.4 11.4 0 0 1 8.5 4c0-.55-.45-1-1-1" />
+                        </svg> +971-13-1234567
+                    </p>
+                </div>
+
+                <!-- Service Links -->
+                <div class="col-md-2">
+                    <h5>Service</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#">General Practice</a></li>
+                        <li><a href="#">Internal Medicine</a></li>
+                        <li><a href="#">Family Medicine</a></li>
+                        <li><a href="#">Pediatrics</a></li>
+                        <li><a href="#">Gynecology</a></li>
+                        <li><a href="#">Dentistry</a></li>
+                        <li><a href="#">Pathology</a></li>
+                        <li><a href="#">Home Healthcare</a></li>
+                    </ul>
+                </div>
+
+                <!-- Company Links -->
+                <div class="col-md-2">
+                    <h5>Company</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="#">About</a></li>
+                        <li><a href="service.html">Services</a></li>
+                        <li><a href="doctors.html">Doctors</a></li>
+                        <li><a href="contact.html">Contacts</a></li>
+                    </ul>
+                </div>
+
+                <!-- Social Media and Text -->
+                <div class="col-md-2">
+                    <div class="footer-icons">
+                        <a href="#">in</a>
+                        <a href="#">X</a>
+                        <a href="#">lg</a>
+                    </div>
+                    <p>Stay connected with us for expert healthcare services in Deira, Dubai.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- footer section ends -->
+
+    <!-- own js -->
+
+    <!-- scroll script -->
+    <script>
+        $(document).ready(function () {
+            $(".nav-link").on("click", function (event) {
+                event.preventDefault();
+                $("html, body").animate({
+                    scrollTop: $($(this).attr("href")).offset().top - 20
+                }, 800);
+                $(".nav-link").removeClass("active");
+                $(this).addClass("active");
+            });
+        });
+    </script>
+
+    <!-- toggle script -->
+    <script>
+        function toggleDescription(id) {
+            var desc = document.getElementById(id);
+            if (desc.style.display === "none") {
+                desc.style.display = "block";
+            } else {
+                desc.style.display = "none";
+            }
+        }
+    </script>
+
+    <!-- Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+</body>
+
+</html>

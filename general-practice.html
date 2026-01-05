@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>General Practitioner Services</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        /* nav section start */
+        .navbar {
+            padding: 10px 20px;
+        }
+
+        .navbar-brand img {
+            height: 40px;
+            /* Adjust the height of the logo */
+        }
+
+        .navbar .nav-link {
+            font-size: 20px;
+            /* Adjust the font size */
+            color: #2193D1;
+            font-weight: 700;
+            margin-right: 20px;
+        }
+
+        /* main section  */
+        .section-title {
+            color: #2193D1;
+            font-weight: bold;
+            font-size: 30px;
+        }
+
+        .content-section {
+            padding: 40px 0;
+            font-size: 20px;
+        }
+
+        .content-section p {
+            color: #5a86ad;
+        }
+
+        .image-container img {
+            border-radius: 10px;
+            max-width: 100%;
+            height: auto;
+        }
+
+        .container.sub-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            max-width: 1000px;
+            width: 100%;
+            margin-top: 60px;
+        }
+
+        .card {
+            position: relative;
+            width: 100%;
+            height: 250px;
+            background: #fff;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+        }
+
+        .card:hover {
+            transform: scale(1.05);
+        }
+
+        .card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .card .description {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            padding: 15px;
+            background: #75a7be;
+            color: #fff;
+            text-align: center;
+            opacity: 0;
+            transform: translateY(100%);
+            transition: opacity 0.3s, transform 0.3s;
+        }
+
+        .card:hover .description {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+
+        /* appointment section start  */
+        .appointment-container {
+            background-color: #ffffff;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+            max-width: 900px;
+            margin: 50px auto;
+            text-align: center;
+        }
+
+        .appointment-container .form-title {
+            text-align: center;
+            font-weight: bold;
+            font-size: 24px;
+            color: #2193D1;
+            margin-bottom: 20px;
+        }
+
+        /* Input styling to match the exact design */
+        .appointment-container .form-control,
+        .form-select,
+        textarea {
+            background-color: #EAEDEF;
+            border: 1px solid #e0e0e0;
+            border-radius: 15px;
+            height: 45px;
+            font-size: 16px;
+            padding: 10px 15px;
+            color: #989898;
+        }
+
+        .appointment-container textarea {
+            height: auto;
+            resize: none;
+        }
+
+        .appointment-container .btn-proceed {
+            background-color: #75A7BE;
+            color: white;
+            border: none;
+            border-radius: 15px;
+            width: 50%;
+            height: 45px;
+            font-size: 16px;
+            font-weight: 500;
+        }
+
+        .appointment-container .btn-proceed:hover {
+            background-color: #60889a;
+            color: white;
+            font-weight: 700;
+        }
+
+
+        /* underlines after heading  */
+        .underline-text {
+            display: inline-block;
+            /*  Make it behave like an inline element but allow for block-level properties */
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        .underline-text::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            width: 100%;
+            height: 5px;
+            background-color: #75a7be;
+            transition: all 0.3s ease;
+            border-radius: 50px;
+        }
+
+        .underline-text:hover::after {
+            width: 50%;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        /* footer section starts  */
+        .footer {
+            padding: 40px 0;
+            background-color: #F8F9FA;
+            margin-top: 80px;
+        }
+
+        .footer h5 {
+            font-size: 16px;
+            font-weight: bold;
+            color: #75A7BE;
+        }
+
+        .footer p,
+        .footer a {
+            color: #77808B;
+            font-size: 14px;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+
+        .footer-icons a {
+            display: inline-block;
+            margin-right: 10px;
+            color: white;
+            background-color: #75A7BE;
+            width: 30px;
+            height: 30px;
+            line-height: 30px;
+            text-align: center;
+            border-radius: 50%;
+            text-decoration: none;
+        }
+
+        /* footer section ends  */
+    </style>
+</head>
+
+<body>
+
+    <!-- Bootstrap Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+            <!-- Logo on the left -->
+            <a class="navbar-brand" href="#">
+                <img src="assets/LogoTag.png" alt="Logo">
+            </a>
+
+            <!-- Toggler for mobile view -->
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <!-- Navbar links, justified to the right -->
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto"> <!-- ms-auto for right alignment -->
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="about.html">About Us</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle active" data-bs-toggle="dropdown"
+                            href="service.html">Services</a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="service.html">all</a></li>
+                            <li><a class="dropdown-item  active" aria-current="page" href="#">General Practice</a></li>
+                            <li><a class="dropdown-item" href="#"> Internal Medicine</a></li>
+                            <li><a class="dropdown-item" href="#"> Family Medicine</a></li>
+                            <li><a class="dropdown-item" href="#"> Pediatrics</a></li>
+                            <li><a class="dropdown-item" href="#"> Gynecology</a></li>
+                            <li><a class="dropdown-item" href="#"> Dentistry</a></li>
+                            <li><a class="dropdown-item" href="#"> Pathology</a></li>
+                            <li><a class="dropdown-item" href="#"> Home Healthcare</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="doctors.html">Doctors</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="contact.html">Contacts</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+
+    <!-- carousel  -->
+    <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <img src="assets/carousel_Gen.png" class="d-block w-100" alt="...">
+            </div>
+        </div>
+    </div>
+
+
+
+    <!-- main section  -->
+    <div class="container content-section p-4 mt-5">
+        <div class="row align-items-center">
+            <div class="col-md-4 image-container">
+                <img src="assets/general.png" alt="Doctor Writing Notes">
+            </div>
+            <div class="col-md-8">
+                <h3 class="section-title">Your path to wellness through our expertise</h3>
+                <p>The Department of General Medicine offers comprehensive diagnostic services and general medical care.
+                    Disease diagnosis, management, and prevention are the main priorities of this Department. It works
+                    closely with other specialized medical departments to ensure that all patient needs are identified
+                    and met.</p>
+
+                <h4 class="section-title">What diseases does a General Practitioner deal with</h4>
+                <ul style="color: #5a86ad;">
+                    <li>We carry out vaccinations</li>
+                    <li>We perform preventive examination (disease screenings)</li>
+                    <li>We give recommendations on nutrition, physical activity, lifestyle</li>
+                    <li>We carry out preventive examination of healthy children</li>
+                    <li>We assess the risks of developing diseases</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="container content-section">
+        <h4 class="section-title">What kind of investigations are ordered by a General Practitioner</h4>
+        <p>At the medical center Polyclinic.ae, there is a modern laboratory and functional diagnostics rooms, where, if
+            necessary, you will be conducted:</p>
+        <ul style="color: #5a86ad;">
+            <li>ECG</li>
+            <li>Ultrasound of internal organs</li>
+            <li>CT, MRI of various organs</li>
+            <li>Radiography (chest organs, bones, facial skull, spine, joints, abdominal cavity, kidneys)</li>
+            <li>General clinical blood and urine tests, stool analysis, determination of vitamin D, culture for
+                pneumococci, and antibacterial sensitivity</li>
+            <li>If you have a headache, rash, sore back, or increased body temperature, do not hesitate to ask for help
+                at Polyclinic.ae</li>
+        </ul>
+        <p>It is an integrated approach in the Department of Family Medicine Polyclinic.ae that helps preserve the
+            physical and psychological health of patients.</p>
+        <p>A flexible schedule of appointments is suitable for patients with a busy work schedule, parents with
+            children, and active individuals.</p>
+    </div>
+
+
+    <!-- sub-services section  -->
+
+    <h4 class="section-title text-center">Comprehensive General Medicine Services in Dubai, including:</h4>
+    <div class="container sub-container">
+        <div class="card">
+            <img src="https://img.freepik.com/premium-photo/medical-consultation-pediatricians-doctors-hospital_85574-1083.jpg?ga=GA1.1.208303102.1739859179&semt=ais_hybrid"
+                alt="Image 1">
+            <div class="description"><b>Preventive Care –</b> Routine checkups, vaccinations, screenings.</div>
+        </div>
+        <div class="card">
+            <img src="https://img.freepik.com/free-photo/doctor-with-protection-mask-visor-typing-treatment-laptop-while-mother-comes-with-daughter-consultation-hospital-coronavirus-pandemic-equipped-nurse-talking-with-patients_482257-14494.jpg?ga=GA1.1.208303102.1739859179"
+                alt="Image 2">
+            <div class="description"><b>Acute Care –</b> Treatment for short-term illnesses and minor injuries.</div>
+        </div>
+        <div class="card">
+            <img src="https://img.freepik.com/premium-photo/muslim-female-doctor-checking-up-patient-s-blood-pressure-hospital-room_35378-2823.jpg?ga=GA1.1.208303102.1739859179&semt=ais_hybrid"
+                alt="Image 3">
+            <div class="description"><b>Minor Procedures –</b> Suturing, skin lesion removal, wound care.</div>
+        </div>
+        <div class="card">
+            <img src="https://img.freepik.com/premium-photo/medical-team-different-races-standing-indoor_829491-52.jpg?ga=GA1.1.208303102.1739859179&semt=ais_hybrid"
+                alt="Image 1">
+            <div class="description"><b>Children’s Health –</b> Pediatric care, immunizations, growth monitoring.</div>
+        </div>
+        <div class="card">
+            <img src="https://img.freepik.com/premium-photo/female-muslim-doctor-nurse-with-protective-work_548373-2869.jpg?ga=GA1.1.208303102.1739859179&semt=ais_hybrid"
+                alt="Image 2">
+            <div class="description"><b>Women's Health –</b> Pregnancy advice, contraception, screenings.</div>
+        </div>
+        <div class="card">
+            <img src="https://img.freepik.com/premium-photo/young-muslim-female-looking-blue-liquid-flask-held-by-mature-colleague_274679-34069.jpg?ga=GA1.1.208303102.1739859179"
+                alt="Image 3">
+            <div class="description"><b>Geriatric Care –</b> Senior health, fall prevention, medication reviews.</div>
+        </div>
+    </div>
+
+
+    <!-- appointment section  -->
+    <!-- Appointment   -->
+    <div class="appointment-container">
+        <div class="underline-text form-title">
+            <h1 style="color: #2193D1;">Make Appointment</h1>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <img src="assets/contact_appointment.png" alt="Doctor and Patient" class="img-fluid rounded">
+            </div>
+            <div class="col-md-6">
+                <h4 class="mb-4" style="color: #75A7BE; font-weight: 700;">Book Your Slot</h4>
+                <form>
+                    <div class="mb-3">
+                        <input type="text" class="form-control" placeholder="Full Name*">
+                    </div>
+                    <div class="mb-3">
+                        <input type="tel" class="form-control" placeholder="Phone*">
+                    </div>
+                    <div class="mb-3">
+                        <input type="email" class="form-control" placeholder="Your Email*">
+                    </div>
+                    <div class="mb-3 row">
+                        <div class="col">
+                            <select class="form-select">
+                                <option selected disabled>Select Service</option>
+                                <option value="1">General Checkup</option>
+                                <option value="2">Consultation</option>
+                                <option value="3">Follow-up</option>
+                            </select>
+                        </div>
+                        <div class="col">
+                            <input type="date" class="form-control">
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <textarea class="form-control" rows="3" placeholder="Message"></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-proceed">Proceed</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- footer section starts -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <!-- About Section -->
+                <div class="col-md-3">
+                    <img src="assets/logo.jpg" height="80px" width="90px" style="margin-bottom: 10px;" alt="">
+                    <h5>SmartCare Polyclinic</h5>
+                    <p>
+                        SmartCare Polyclinic is dedicated to providing comprehensive and high-quality healthcare
+                        services in Deira, Dubai.
+                    </p>
+                    <p>Design and Developed by <a href="https://centurymedia360.com/" target="_blank">CenturyMedia360</a></p>
+                </div>
+
+                <!-- Get in Touch Section -->
+                <div class="col-md-3">
+                    <h5>Get in Touch</h5>
+                    <p>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                            <g fill="none" stroke="#75A7BE" stroke-linejoin="round" stroke-width="2">
+                                <path d="M13 9a1 1 0 1 1-2 0a1 1 0 0 1 2 0Z" />
+                                <path
+                                    d="M17.5 9.5c0 3.038-2 6.5-5.5 10.5c-3.5-4-5.5-7.462-5.5-10.5a5.5 5.5 0 1 1 11 0Z" />
+                            </g>
+                        </svg> Location is Deira, Dubai, UAE.
+                    </p>
+                    <p>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                            <path fill="#75A7BE"
+                                d="M22 6c0-1.1-.9-2-2-2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2zm-2 0l-8 5l-8-5zm0 12H4V8l8 5l8-5z" />
+                        </svg> info@SmartCare.com
+                    </p>
+                    <p>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                            <path fill="#75A7BE"
+                                d="M6.54 5c.06.89.21 1.76.45 2.59l-1.2 1.2c-.41-1.2-.67-2.47-.76-3.79zm9.86 12.02c.85.24 1.72.39 2.6.45v1.49c-1.32-.09-2.59-.35-3.8-.75zM7.5 3H4c-.55 0-1 .45-1 1c0 9.39 7.61 17 17 17c.55 0 1-.45 1-1v-3.49c0-.55-.45-1-1-1c-1.24 0-2.45-.2-3.57-.57a.8.8 0 0 0-.31-.05c-.26 0-.51.1-.71.29l-2.2 2.2a15.15 15.15 0 0 1-6.59-6.59l2.2-2.2c.28-.28.36-.67.25-1.02A11.4 11.4 0 0 1 8.5 4c0-.55-.45-1-1-1" />
+                        </svg> +971-13-1234567
+                    </p>
+                </div>
+
+                <!-- Service Links -->
+                <div class="col-md-2">
+                    <h5>Service</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="general-practice.html">General Practice</a></li>
+                        <li><a href="#">Internal Medicine</a></li>
+                        <li><a href="#">Family Medicine</a></li>
+                        <li><a href="#">Pediatrics</a></li>
+                        <li><a href="#">Gynecology</a></li>
+                        <li><a href="#">Dentistry</a></li>
+                        <li><a href="#">Pathology</a></li>
+                        <li><a href="#">Home Healthcare</a></li>
+                    </ul>
+                </div>
+
+                <!-- Company Links -->
+                <div class="col-md-2">
+                    <h5>Company</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="about.html">About</a></li>
+                        <li><a href="service.html">Services</a></li>
+                        <li><a href="doctors.html">Doctors</a></li>
+                        <li><a href="contact.html">Contacts</a></li>
+                    </ul>
+                </div>
+
+                <!-- Social Media and Text -->
+                <div class="col-md-2">
+                    <div class="footer-icons">
+                        <a href="#">in</a>
+                        <a href="#">X</a>
+                        <a href="#">lg</a>
+                    </div>
+                    <p>Stay connected with us for expert healthcare services in Deira, Dubai.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- footer section ends -->
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

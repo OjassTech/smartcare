@@ -1,0 +1,1116 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SmartCare/Doctors</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        /* nav section start */
+        .navbar {
+            padding: 10px 20px;
+        }
+
+        .navbar-brand img {
+            height: 40px;
+            /* Adjust the height of the logo */
+        }
+
+        .navbar .nav-link {
+            font-size: 20px;
+            /* Adjust the font size */
+            color: #2193D1;
+            font-weight: 700;
+            margin-right: 20px;
+        }
+
+
+        /* underlines after heading  */
+        .underline-text {
+            display: inline-block;
+            /*  Make it behave like an inline element but allow for block-level properties */
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        .underline-text::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            width: 100%;
+            height: 5px;
+            background-color: #75a7be;
+            transition: all 0.3s ease;
+            border-radius: 50px;
+        }
+
+        .underline-text:hover::after {
+            width: 50%;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+
+        /* doctors  */
+
+        /* full doctors container css  */
+        #serviceTooltip,
+        #doctorTooltip.tooltip {
+            background-color: #75A7BE;
+            color: white;
+            opacity: 1;
+            border-radius: 50px;
+            max-width: max-content;
+            margin-top: 10px;
+        }
+
+        .card {
+            /* Ensure all cards have the same height */
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        .card-body {
+            flex-grow: 1;
+        }
+
+        .card .svg-icon {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            cursor: pointer;
+        }
+
+        .modal-content {
+            background-color: #75a7be;
+            color: white;
+            border-radius: 10px;
+            max-height: 80vh;
+            overflow-y: scroll;
+        }
+
+        .modal-header {
+            border-bottom: none;
+        }
+
+        .modal-body img {
+            max-width: 100%;
+            height: auto;
+        }
+
+        /* CSS for the doctors container */
+        .doctors-container {
+            max-height: 630px;
+            /* Set a fixed height */
+            overflow-y: auto;
+            /* Enable vertical scrolling */
+            padding: 20px 40px;
+            border-radius: 20px;
+            overflow-x: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Custom scrollbar styles */
+        .doctors-container::-webkit-scrollbar {
+            width: 8px;
+            /* Width of the scrollbar */
+        }
+
+        .doctors-container::-webkit-scrollbar-thumb {
+            background: #75A7BE;
+            /* Color of the scrollbar thumb */
+            border-radius: 10px;
+            /* Rounded corners for the thumb */
+        }
+
+        .doctors-container::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            /* Background of the scrollbar track */
+        }
+
+        .doctors-container::-webkit-scrollbar-track {
+            -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
+            background-color: #F5F5F5;
+        }
+
+        .doctors-container::-webkit-scrollbar {
+            width: 8px;
+            background-color: #F5F5F5;
+        }
+
+        .doctors-container::-webkit-scrollbar-thumb {
+            border-radius: 10px;
+            -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, .3);
+            background-color: #2193D1;
+        }
+
+        /* Card styles */
+        .card {
+            width: 18rem;
+            background-color: #75a7be;
+            color: white;
+            padding: 20px 10px;
+            height: 100%;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            color: white;
+        }
+
+        .card:hover {
+            transform: scale(1.05);
+        }
+
+        /* Full-width search bar */
+        .search-bar {
+            background-color: #7aaaba;
+            padding: 10px;
+            border-radius: 25px;
+            display: flex;
+            align-items: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 1000px;
+        }
+
+        .search-input {
+            flex: 1;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 25px;
+            outline: none;
+        }
+
+        .search-icon {
+            background-color: white;
+            padding: 8px;
+            border-radius: 50%;
+            margin-left: 10px;
+            cursor: pointer;
+        }
+
+        /* Container for dropdowns */
+        .dropdown-container {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 15px;
+            max-width: 800px;
+            width: 100%;
+            flex-wrap: wrap;
+        }
+
+        @media (max-width: 1000px) {
+            .dropdown-container {
+                gap: 20px;
+            }
+        }
+
+        .search-container .dropdown-menu {
+            max-height: 100px;
+            overflow-y: scroll;
+        }
+
+        /* Dropdown buttons */
+        .dropdown-button {
+            flex: 1;
+            border-radius: 25px;
+            padding: 8px 20px;
+            margin: 0 5px;
+            border: 1px solid #7aaaba;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        /* Search button */
+        .search-button {
+            background-color: #7aaaba;
+            color: white;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s ease;
+            max-height: 42px;
+        }
+
+        .search-button:hover {
+            background-color: #5f8e9b;
+        }
+
+        @media (max-width: 576px) {
+            .card {
+                width: 100%;
+                /* Full width on small devices */
+            }
+        }
+
+        /* footer section starts  */
+        .footer {
+            padding: 40px 0;
+            background-color: #F8F9FA;
+            margin-top: 80px;
+        }
+
+        .footer h5 {
+            font-size: 16px;
+            font-weight: bold;
+            color: #75A7BE;
+        }
+
+        .footer p,
+        .footer a {
+            color: #77808B;
+            font-size: 14px;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+
+        .footer-icons a {
+            display: inline-block;
+            margin-right: 10px;
+            color: white;
+            background-color: #75A7BE;
+            width: 30px;
+            height: 30px;
+            line-height: 30px;
+            text-align: center;
+            border-radius: 50%;
+            text-decoration: none;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Bootstrap Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+            <!-- Logo on the left -->
+            <a class="navbar-brand" href="#">
+                <img src="assets/LogoTag.png" alt="Logo">
+            </a>
+
+            <!-- Toggler for mobile view -->
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <!-- Navbar links, justified to the right -->
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto"> <!-- ms-auto for right alignment -->
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="about.html">About Us</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#">Services</a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="service.html">All</a></li>
+                            <li><a class="dropdown-item" href="general-practice.html">General Practice</a></li>
+                            <li><a class="dropdown-item" href="#"> Internal Medicine</a></li>
+                            <li><a class="dropdown-item" href="#"> Family Medicine</a></li>
+                            <li><a class="dropdown-item" href="#"> Pediatrics</a></li>
+                            <li><a class="dropdown-item" href="#"> Gynecology</a></li>
+                            <li><a class="dropdown-item" href="#"> Dentistry</a></li>
+                            <li><a class="dropdown-item" href="#"> Pathology</a></li>
+                            <li><a class="dropdown-item" href="#"> Home Healthcare</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="#">Doctors</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="contact.html">Contacts</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+
+    <!-- carousel  -->
+    <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel"
+        style="border-bottom: 6px solid #D90C0D;">
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <img src="assets/doctors header.png" class="d-block w-100" alt="...">
+            </div>
+        </div>
+    </div>
+
+
+    <!-- doctors section  -->
+    <section class="doctors" style="margin-top: 80px;">
+        <div class="text-content text-center" style="margin-bottom: 40px;">
+            <h6 style="color: #D90C0D;">We are reliable & trusted</h6>
+            <div class="underline-text">
+                <h1 style="color: #2193D1;">Our Doctors</h1>
+            </div>
+            <p style="padding: 0 18rem;">Our experienced doctors and dedicated healthcare professionals are here to
+                offer
+                personalized care for every stage of life. Whether you’re visiting for routine check-ups, specialized
+                care, or home healthcare services, we are here to ensure your well-being and peace of mind.</p>
+        </div>
+
+        <div class="container search-container d-flex flex-column align-items-center">
+            <div class="search-bar">
+                <input type="text" class="search-input" placeholder="Search here...." id="searchInput">
+                <div class="search-icon">
+                    <svg id="searchButton" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                        viewBox="0 0 24 24">
+                        <path fill="#75A7BE"
+                            d="M9.5 16q-2.725 0-4.612-1.888T3 9.5t1.888-4.612T9.5 3t4.613 1.888T16 9.5q0 1.1-.35 2.075T14.7 13.3l5.6 5.6q.275.275.275.7t-.275.7t-.7.275t-.7-.275l-5.6-5.6q-.75.6-1.725.95T9.5 16m0-2q1.875 0 3.188-1.312T14 9.5t-1.312-3.187T9.5 5T6.313 6.313T5 9.5t1.313 3.188T9.5 14" />
+                    </svg>
+                </div>
+            </div>
+
+            <div class="dropdown-container">
+                <!-- Dropdown 1 -->
+                <div class="dropdown">
+                    <button class="btn dropdown-button dropdown-toggle" type="button" id="dropdownService"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                        Select Service
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownService">
+                        <li><a class="dropdown-item" href="#" data-service="General Practitioner">General
+                                Practitioner</a></li>
+                        <li><a class="dropdown-item" href="#" data-service="Family Medicine">Family Medicine</a></li>
+                        <li><a class="dropdown-item" href="#" data-service="Internal Medicine Specialist">Internal
+                                Medicine Specialist</a></li>
+                        <li><a class="dropdown-item" href="#" data-service="Gynecology">Gynecology</a></li>
+                        <li><a class="dropdown-item" href="#" data-service="Pediatrics">Pediatrics</a></li>
+                        <li><a class="dropdown-item" href="#" data-service="Dentistry">Dentistry</a></li>
+                        <li><a class="dropdown-item" href="#" data-service="Home Healthcare">Home Healthcare</a></li>
+                        <li><a class="dropdown-item" href="#" data-service="Pathology">Pathology</a></li>
+                    </ul>
+                    <div id="serviceTooltip" class="tooltip" style="display:none;"></div>
+                </div>
+
+                <!-- Dropdown 2 -->
+                <div class="dropdown">
+                    <button class="btn dropdown-button dropdown-toggle" type="button" id="dropdownDoctors"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                        Choose Doctors
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownDoctors">
+                        <li><a class="dropdown-item" href="#" data-doctor="Dr. Ahmad Al-Mansoori">Dr. Ahmad
+                                Al-Mansoori</a></li>
+                        <li><a class="dropdown-item" href="#" data-doctor="Dr. Fatima Al-Sabah">Dr. Fatima Al-Sabah</a>
+                        </li>
+                        <li><a class="dropdown-item" href="#" data-doctor="Dr. Saeed Al-Khalifa">Dr. Saeed
+                                Al-Khalifa</a></li>
+                        <li><a class="dropdown-item" href="#" data-doctor="Dr. Amina Khaled">Dr. Amina Khaled</a></li>
+                        <li><a class="dropdown-item" href="#" data-doctor="Dr. Ayesha Khan">Dr. Ayesha Khan</a></li>
+                        <li><a class="dropdown-item" href="#" data-doctor="Dr. Faisal Hussain">Dr. Faisal Hussain</a>
+                        </li>
+                        <li><a class="dropdown-item" href="#" data-doctor="Dr. Mehnaz Bano">Dr. Mehnaz Bano</a></li>
+                        <li><a class="dropdown-item" href="#" data-doctor="Dr. Sana Ahmed">Dr. Sana Ahmed</a></li>
+                        <li><a class="dropdown-item" href="#" data-doctor="Dr. Mohsin Raza">Dr. Mohsin Raza</a></li>
+                    </ul>
+                    <div id="doctorTooltip" class="tooltip" style="display:none;"></div>
+                </div>
+
+
+                <!-- Dropdown 3 -->
+                <div class="dropdown">
+                    <button class="btn dropdown-button dropdown-toggle" type="button" id="dropdownCare"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                        Children Care
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownCare">
+                        <li><a class="dropdown-item" href="#">Care 1</a></li>
+                        <li><a class="dropdown-item" href="#">Care 2</a></li>
+                        <li><a class="dropdown-item" href="#">Care 3</a></li>
+                    </ul>
+                </div>
+
+                <!-- remove filter button -->
+                <button id="resetFilters" class="search-button" class="btn btn-danger">Clear Selection</button>
+
+                <!-- Search button -->
+                <!-- <button class="search-button" id="textSearchButton">Search</button> -->
+            </div>
+        </div>
+
+        <!-- New container for doctors with scrollbar -->
+        <div class="container doctors-container mt-5" id="doctorsContainer">
+            <div class="row row-cols-sm-1 row-cols-md-2 row-cols-lg-4 g-5 mt-1" id="doctorCards">
+                <!-- Doctor cards will be dynamically inserted here -->
+            </div>
+            <div id="noMatch" style="display:none; color:red;">No matches found!</div>
+        </div>
+    </section>
+
+    <!-- Modal for Dr. Ahmad Al-Mansoori -->
+    <div class="modal fade" id="doctorModal1" tabindex="-1" aria-labelledby="doctorModalLabel1" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="doctorModalLabel1">Dr. Ahmad Al-Mansoori</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body text-left">
+                    <img src="assets/dr 1.png" alt="Doctor" class="img-fluid">
+                    <h4>General Practitioner</h4>
+                    <h4>Profile</h4>
+                    <p>Graduated from Jawaharlal Nehru Medical College, Aligarh Muslim University Aligarh, in 1982.
+                        Trained in anesthesiology as a house surgeon.
+                        With over 37 years of vast General Practice experience, including 21 years working as In-charge
+                        of Accident and Emergency in the Ministry of Health, Kingdom of Saudi Arabia.
+                        Capable of diagnosing and treating a wide range of medical, surgical, pediatric, and
+                        gynecological problems at the General Practitioner level.
+                        Work experience as a resident in a Dialysis unit for more than 3 years.
+                        Competent in handling all medical-surgical orthopedic and pediatric emergencies.</p>
+                    <h4>Languages Known</h4>
+                    <ul>
+                        <li>English</li>
+                        <li>Urdu</li>
+                        <li>Hindi</li>
+                        <li>Arabic</li>
+                        <li>Persian</li>
+                    </ul>
+                    <h4>Area of Special Interest</h4>
+                    <ul>
+                        <li>Expert in Handling Trauma</li>
+                        <li>Rapid Sequence Intubation</li>
+                        <li>Cardiac Resuscitation</li>
+                        <li>Defibrillation</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for Dr. Fatima Al-Sabah -->
+    <div class="modal fade" id="doctorModal2" tabindex="-1" aria-labelledby="doctorModalLabel2" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="doctorModalLabel2">Dr. Fatima Al-Sabah</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body text-left">
+                    <img src="assets/dr 2.png" alt="Doctor" class="img-fluid">
+                    <h4>Family Medicine</h4>
+                    <h4>Profile</h4>
+                    <p>Dr. Fatima Al-Sabah graduated from King Saud University, Riyadh in 2015 with a degree in
+                        Medicine. She is a dynamic and dedicated Family Medicine Specialist with a strong passion for
+                        providing comprehensive, patient-centered care. Since completing her studies, she has gained
+                        experience working in both urban and rural healthcare settings in the Kingdom of Saudi Arabia,
+                        where she has developed expertise in preventive healthcare, family medicine, and emergency care.
+
+                        Dr. Al-Sabah is particularly interested in women's health, chronic disease management, and
+                        pediatric care, offering tailored treatment plans that prioritize the long-term well-being of
+                        her patients. With a focus on community health, she is committed to educating patients about
+                        healthy lifestyles, disease prevention, and managing chronic conditions such as diabetes and
+                        hypertension.
+
+                        Her approachable and compassionate nature has earned her the trust of her patients, particularly
+                        in managing their ongoing health concerns. Dr. Al-Sabah is also deeply committed to advancing
+                        healthcare practices by staying updated with the latest medical trends and continuously
+                        improving her</p>
+                    <h4>Languages Known</h4>
+                    <ul>
+                        <li>English</li>
+                        <li>Urdu</li>
+                        <li>Arabic</li>
+                    </ul>
+                    <h4>Area of Special Interest</h4>
+                    <ul>
+                        <li>Preventive Care & Wellness</li>
+                        <li>Women’s Health</li>
+                        <li>Chronic Disease Management (Diabetes, Hypertension)</li>
+                        <li>Pediatric Health</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for Dr. Saeed Al-Khalifa -->
+    <div class="modal fade" id="doctorModal3" tabindex="-1" aria-labelledby="doctorModalLabel3" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="doctorModalLabel3">Dr. Saeed Al-Khalifa</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body text-left">
+                    <img src="assets/dr 3.png" alt="Doctor" class="img-fluid">
+                    <h4>Internal Medicine Specialist</h4>
+                    <h4>Profile</h4>
+                    <p>Dr. Saeed Al-Khalifa is an experienced Internal Medicine Specialist with over 40 years of medical
+                        practice. He graduated from Cairo University, Egypt, in 1980 and has since established himself
+                        as a respected figure in the field of internal medicine. Dr. Al-Khalifa has worked in numerous
+                        healthcare institutions across the Kingdom of Saudi Arabia and has been part of the Ministry of
+                        Health for over two decades, providing expert care to a wide range of patients.
+
+                        With extensive experience in diagnosing and managing complex medical conditions, Dr. Al-Khalifa
+                        specializes in chronic disease management, including cardiovascular diseases, diabetes,
+                        hypertension, and respiratory disorders. His comprehensive approach to patient care emphasizes
+                        not only the treatment of illness but also the prevention of disease and the promotion of
+                        overall health and well-being. Dr. Al-Khalifa is known for his deep knowledge of the intricacies
+                        of internal medicine, particularly in managing multifaceted medical conditions in elderly
+                        patients.
+
+                        His compassionate demeanor, combined with his vast clinical knowledge, has earned him the trust
+                        and respect of his patients and colleagues alike. Dr. Al-Khalifa remains an active participant
+                        in various medical conferences and continuously strives to stay updated with the latest
+                        advancements in medical science.</p>
+                    <h4>Languages Known</h4>
+                    <ul>
+                        <li>English</li>
+                        <li>Urdu</li>
+                        <li>Arabic</li>
+                    </ul>
+                    <h4>Area of Special Interest</h4>
+                    <ul>
+                        <li>Chronic Disease Management (Diabetes, Hypertension, Cardiovascular Diseases)</li>
+                        <li>Geriatric Medicine</li>
+                        <li>Preventive Medicine</li>
+                        <li>Complex Internal Medicine Cases</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for Dr. Amina Khaled -->
+    <div class="modal fade" id="doctorModal4" tabindex="-1" aria-labelledby="doctorModalLabel4" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="doctorModalLabel4">Dr. Amina Khaled</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body text-left">
+                    <img src="assets/dr 4.png" alt="Doctor" class="img-fluid">
+                    <h4>Gynecology</h4>
+                    <h4>Profile</h4>
+                    <p>Dr. Amina Khaled is a highly skilled Consultant in Internal Medicine with over 10 years of
+                        clinical experience. She graduated from King Abdulaziz University, Jeddah, in 2011, and went on
+                        to complete advanced training in Internal Medicine, earning a reputation for her expertise in
+                        the management of both acute and chronic medical conditions. Dr. Khaled has worked in prominent
+                        medical institutions across Saudi Arabia, where she has honed her skills in treating complex
+                        medical cases with a focus on evidence-based practices.
+
+                        Her special interests include the management of chronic diseases such as diabetes, hypertension,
+                        and gastrointestinal disorders, as well as preventive healthcare to reduce the risk of
+                        developing serious conditions. Dr. Khaled is passionate about integrating the latest medical
+                        research with patient care, ensuring that her patients receive the most up-to-date and
+                        comprehensive treatment.
+
+                        Known for her excellent communication skills, Dr. Khaled takes a patient-centered approach to
+                        medicine, listening carefully to her patients' concerns and working closely with them to develop
+                        individualized treatment plans. Her dedication to continuous learning and professional
+                        development makes her a highly respected and trusted consultant in the field.</p>
+                    <h4>Languages Known</h4>
+                    <ul>
+                        <li>English</li>
+                        <li>Urdu</li>
+                        <li>Arabic</li>
+                    </ul>
+                    <h4>Area of Special Interest</h4>
+                    <ul>
+                        <li>Infertility & Hormonal Disorder</li>
+                        <li>Gynecologic Cancer Treatment</li>
+                        <li>Pelvic Floor Disorders</li>
+                        <li>Adolescent Reproductive Health</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for Dr. Ayesha Khan -->
+    <div class="modal fade" id="doctorModal5" tabindex="-1" aria-labelledby="doctorModalLabel5" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="doctorModalLabel5">Dr. Ayesha Khan</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body text-left">
+                    <img src="assets/dr 5.png" alt="Doctor" class="img-fluid">
+                    <h4>Pediatrics</h4>
+                    <h4>Profile</h4>
+                    <p>Graduated from Jawaharlal Nehru Medical College, Aligarh Muslim University Aligarh, in 1985.
+                        Specialized in pediatric medicine with over 30 years of experience in renowned hospitals across
+                        Dubai. Served as Senior Pediatric Consultant at Dubai Health Authority for 15 years, managing
+                        neonatal and adolescent care units. Proficient in handling a wide range of pediatric
+                        emergencies, childhood vaccinations, and developmental disorders. Actively involved in health
+                        awareness programs and workshops for parents in Dubai's communities.</p>
+                    <h4>Languages Known</h4>
+                    <ul>
+                        <li>English</li>
+                        <li>Urdu</li>
+                        <li>Hindi</li>
+                        <li>Arabic</li>
+                    </ul>
+                    <h4>Area of Special Interest</h4>
+                    <ul>
+                        <li>Neonatal Care</li>
+                        <li>Childhood Immunizations</li>
+                        <li>Asthma and Allergy Management</li>
+                        <li>Developmental Assessments</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for Dr. Faisal Hussain -->
+    <div class="modal fade" id="doctorModal6" tabindex="-1" aria-labelledby="doctorModalLabel6" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="doctorModalLabel6">Dr. Faisal Hussain</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body text-left">
+                    <img src="assets/dr 6.png" alt="Doctor" class="img-fluid">
+                    <h4>Dentistry</h4>
+                    <h4>Profile</h4>
+                    <p>Graduated from Jawaharlal Nehru Medical College, Aligarh Muslim University Aligarh, in 1990.
+                        Based in Dubai for over 20 years, offering services in restorative and cosmetic dentistry.
+                        Established a private practice in Jumeirah, known for personalized dental care and advanced
+                        treatments. Specializes in dental implants, Invisalign, and full-mouth rehabilitation. Regularly
+                        conducts oral hygiene awareness programs in schools and community centers in Dubai.</p>
+                    <h4>Languages Known</h4>
+                    <ul>
+                        <li>English</li>
+                        <li>Urdu</li>
+                        <li>Hindi</li>
+                        <li>Arabic</li>
+                    </ul>
+                    <h4>Area of Special Interest</h4>
+                    <ul>
+                        <li>Dental Implants</li>
+                        <li>Cosmetic Dentistry</li>
+                        <li>Orthodontics</li>
+                        <li>Root Canal Therapy</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for Dr. Mehnaz Bano -->
+    <div class="modal fade" id="doctorModal7" tabindex="-1" aria-labelledby="doctorModalLabel7" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="doctorModalLabel7">Dr. Mehnaz Bano</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body text-left">
+                    <img src="assets/dr 7.png" alt="Doctor" class="img-fluid">
+                    <h4>Dentistry</h4>
+                    <h4>Profile</h4>
+                    <p>Graduated from Jawaharlal Nehru Medical College, Aligarh Muslim University Aligarh, in 1988. Over
+                        20 years of experience in providing home healthcare services across Dubai. Specializes in
+                        geriatric care, palliative care, and post-surgical rehabilitation services. Works closely with
+                        Dubai’s healthcare authorities to develop personalized in-home care programs. A strong advocate
+                        for holistic healthcare, promoting mental wellness alongside physical recovery in her home care
+                        services.</p>
+                    <h4>Languages Known</h4>
+                    <ul>
+                        <li>English</li>
+                        <li>Urdu</li>
+                        <li>Hindi</li>
+                        <li>Arabic</li>
+                        <li>Punjabi</li>
+                    </ul>
+                    <h4>Area of Special Interest</h4>
+                    <ul>
+                        <li>Chronic Disease Management</li>
+                        <li>Palliative Care</li>
+                        <li>Geriatric Rehabilitation</li>
+                        <li>Post-Surgical Home Care</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for Dr. Sana Ahmed -->
+    <div class="modal fade" id="doctorModal8" tabindex="-1" aria-labelledby="doctorModalLabel8" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="doctorModalLabel8">Dr. Sana Ahmed</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body text-left">
+                    <img src="assets/dr 8.png" alt="Doctor" class="img-fluid">
+                    <h4>Dentistry</h4>
+                    <h4>Profile</h4>
+                    <p>Graduated from Jawaharlal Nehru Medical College, Aligarh Muslim University Aligarh, in 1980.
+                        Practicing in Dubai for over 25 years, specializing in obstetrics and gynecology. Worked at
+                        leading hospitals in Dubai, including Mediclinic and Saudi German Hospital. Expertise in
+                        managing high-risk pregnancies, infertility treatments, and minimally invasive gynecological
+                        procedures. An advocate for women’s health awareness programs across Dubai, conducting numerous
+                        seminars on reproductive health.</p>
+                    <h4>Languages Known</h4>
+                    <ul>
+                        <li>English</li>
+                        <li>Urdu</li>
+                        <li>Hindi</li>
+                        <li>Arabic</li>
+                    </ul>
+                    <h4>Area of Special Interest</h4>
+                    <ul>
+                        <li>High-Risk Pregnancy Management</li>
+                        <li>Infertility Treatments</li>
+                        <li>Polycystic Ovary Syndrome (PCOS) Care</li>
+                        <li>Minimally Invasive Gynecological Surgery</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for Dr. Mohsin Raza -->
+    <div class="modal fade" id="doctorModal9" tabindex="-1" aria-labelledby="doctorModalLabel9" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="doctorModalLabel9">Dr. Mehnaz Bano</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body text-left">
+                    <img src="assets/dr 9.png" alt="Doctor" class="img-fluid">
+                    <h4>Pathology</h4>
+                    <h4>Profile</h4>
+                    <p>Graduated from Jawaharlal Nehru Medical College, Aligarh Muslim University Aligarh, in 1980.
+                        Practicing in Dubai for over 25 years, specializing in obstetrics and gynecology. Worked at
+                        leading hospitals in Dubai, including Mediclinic and Saudi German Hospital. Expertise in
+                        managing high-risk pregnancies, infertility treatments, and minimally invasive gynecological
+                        procedures. An advocate for women’s health awareness programs across Dubai, conducting numerous
+                        seminars on reproductive health.</p>
+                    <h4>Languages Known</h4>
+                    <ul>
+                        <li>English</li>
+                        <li>Urdu</li>
+                        <li>Hindi</li>
+                        <li>Arabic</li>
+                    </ul>
+                    <h4>Area of Special Interest</h4>
+                    <ul>
+                        <li>High-Risk Pregnancy Management</li>
+                        <li>Infertility Treatments</li>
+                        <li>Polycystic Ovary Syndrome (PCOS) Care</li>
+                        <li>Minimally Invasive Gynecological Surgery</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- more modals  -->
+    <!-- doctors section ends  -->
+
+
+
+    <!-- footer section starts -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <!-- About Section -->
+                <div class="col-md-3">
+                    <img src="assets/logo.jpg" height="80px" width="90px" style="margin-bottom: 10px;" alt="">
+                    <h5>SmartCare Polyclinic</h5>
+                    <p>
+                        SmartCare Polyclinic is dedicated to providing comprehensive and high-quality healthcare
+                        services in Deira, Dubai.
+                    </p>
+                    <p>Design and Developed by <a href="https://centurymedia360.com/" target="_blank">CenturyMedia360</a></p>
+                </div>
+
+                <!-- Get in Touch Section -->
+                <div class="col-md-3">
+                    <h5>Get in Touch</h5>
+                    <p>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                            <g fill="none" stroke="#75A7BE" stroke-linejoin="round" stroke-width="2">
+                                <path d="M13 9a1 1 0 1 1-2 0a1 1 0 0 1 2 0Z" />
+                                <path
+                                    d="M17.5 9.5c0 3.038-2 6.5-5.5 10.5c-3.5-4-5.5-7.462-5.5-10.5a5.5 5.5 0 1 1 11 0Z" />
+                            </g>
+                        </svg> Location is Deira, Dubai, UAE.
+                    </p>
+                    <p>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                            <path fill="#75A7BE"
+                                d="M22 6c0-1.1-.9-2-2-2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2zm-2 0l-8 5l-8-5zm0 12H4V8l8 5l8-5z" />
+                        </svg> info@SmartCare.com
+                    </p>
+                    <p>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                            <path fill="#75A7BE"
+                                d="M6.54 5c.06.89.21 1.76.45 2.59l-1.2 1.2c-.41-1.2-.67-2.47-.76-3.79zm9.86 12.02c.85.24 1.72.39 2.6.45v1.49c-1.32-.09-2.59-.35-3.8-.75zM7.5 3H4c-.55 0-1 .45-1 1c0 9.39 7.61 17 17 17c.55 0 1-.45 1-1v-3.49c0-.55-.45-1-1-1c-1.24 0-2.45-.2-3.57-.57a.8.8 0 0 0-.31-.05c-.26 0-.51.1-.71.29l-2.2 2.2a15.15 15.15 0 0 1-6.59-6.59l2.2-2.2c.28-.28.36-.67.25-1.02A11.4 11.4 0 0 1 8.5 4c0-.55-.45-1-1-1" />
+                        </svg> +971-13-1234567
+                    </p>
+                </div>
+
+                <!-- Service Links -->
+                <div class="col-md-2">
+                    <h5>Service</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#">General Practice</a></li>
+                        <li><a href="#">Internal Medicine</a></li>
+                        <li><a href="#">Family Medicine</a></li>
+                        <li><a href="#">Pediatrics</a></li>
+                        <li><a href="#">Gynecology</a></li>
+                        <li><a href="#">Dentistry</a></li>
+                        <li><a href="#">Pathology</a></li>
+                        <li><a href="#">Home Healthcare</a></li>
+                    </ul>
+                </div>
+
+                <!-- Company Links -->
+                <div class="col-md-2">
+                    <h5>Company</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="about.html">About</a></li>
+                        <li><a href="service.html">Services</a></li>
+                        <li><a href="#">Doctors</a></li>
+                        <li><a href="contact.html">Contacts</a></li>
+                    </ul>
+                </div>
+
+                <!-- Social Media and Text -->
+                <div class="col-md-2">
+                    <div class="footer-icons">
+                        <a href="#">in</a>
+                        <a href="#">X</a>
+                        <a href="#">lg</a>
+                    </div>
+                    <p>Stay connected with us for expert healthcare services in Deira, Dubai.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- footer section ends -->
+
+
+    <!-- Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+
+    <script>
+        const doctors = [
+            {
+                name: "Dr. Ahmad Al-Mansoori ",
+                designation: "General Practitioner",
+                img: "assets/dr 1.png",
+                modalId: "#doctorModal1"
+            },
+            {
+                name: "Dr. Fatima Al-Sabah",
+                designation: "Family Medicine",
+                img: "assets/dr 2.png",
+                modalId: "#doctorModal2"
+            },
+            {
+                name: "Dr. Saeed Al-Khalifa",
+                designation: "Internal Medicine Specialist",
+                img: "assets/dr 3.png",
+                modalId: "#doctorModal3"
+            },
+            {
+                name: "Dr. Amina Khaled",
+                designation: "Gynecology",
+                img: "assets/dr 4.png",
+                modalId: "#doctorModal4"
+            },
+            {
+                name: "Dr. Ayesha Khan",
+                designation: "Pediatrics",
+                img: "assets/dr 5.png",
+                modalId: "#doctorModal5"
+            },
+            {
+                name: "Dr. Faisal Hussain",
+                designation: "Dentistry",
+                img: "assets/dr 6.png",
+                modalId: "#doctorModal6"
+            },
+            {
+                name: "Dr. Mehnaz Bano",
+                designation: "Home Healthcare",
+                img: "assets/dr 7.png",
+                modalId: "#doctorModal7"
+            },
+            {
+                name: "Dr. Sana Ahmed",
+                designation: "Dentistry",
+                img: "assets/dr 8.png",
+                modalId: "#doctorModal8"
+            },
+            {
+                name: "Dr. Mohsin Raza",
+                designation: "Pathology",
+                img: "assets/dr 9.png",
+                modalId: "#doctorModal9"
+            }
+        ];
+
+        const searchInput = document.getElementById('searchInput');
+        const searchButton = document.getElementById('searchButton');
+        const doctorsContainer = document.getElementById('doctorCards');
+        const noMatch = document.getElementById('noMatch');
+        const serviceTooltip = document.getElementById('serviceTooltip');
+        const doctorTooltip = document.getElementById('doctorTooltip');
+
+        function displayDoctors(doctorsToDisplay) {
+            doctorsContainer.innerHTML = '';
+            noMatch.style.display = 'none';
+
+            if (doctorsToDisplay.length === 0) {
+                noMatch.style.display = 'block';
+                return;
+            }
+
+            doctorsToDisplay.forEach(doctor => {
+                const doctorCard = `
+                <div class="col">
+                    <div class="card position-relative" style="width: 18rem; background-color: #75a7be; color: white; padding: 20px 10px; border-radius: 20px 0;">
+                        <img src="${doctor.img}" class="card-img-top" alt="${doctor.designation}">
+                        <div class="card-body">
+                            <h2 class="card-title text-center">${doctor.name}</h2>
+                            <h5 class="card-text text-center">${doctor.designation}</h5>
+                        </div>
+                        <a href="#" class="svg-icon" data-bs-toggle="modal" data-bs-target="${doctor.modalId}">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" viewBox="0 0 1024 1024">
+                                <path fill="#fff" d="M352 480h320a32 32 0 1 1 0 64H352a32 32 0 0 1 0-64" />
+                                <path fill="#fff" d="M480 672V352a32 32 0 1 1 64 0v320a32 32 0 0 1-64 0" />
+                                <path fill="#fff" d="M512 896a384 384 0 1 0 0-768a384 384 0 0 0 0 768m0 64a448 448 0 1 1 0-896a448 448 0 0 1 0 896" />
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+            `;
+                doctorsContainer.innerHTML += doctorCard;
+            });
+        }
+
+        function handleSearch() {
+            const searchTerm = searchInput.value.toLowerCase();
+            const filteredDoctors = doctors.filter(doctor =>
+                doctor.name.toLowerCase().includes(searchTerm) ||
+                doctor.designation.toLowerCase().includes(searchTerm)
+            );
+            displayDoctors(filteredDoctors);
+        }
+
+        searchButton.addEventListener('click', handleSearch);
+
+        // Trigger search on "Enter" key press
+        searchInput.addEventListener('keydown', function (event) {
+            if (event.key === "Enter") {
+                event.preventDefault(); // Prevent form submission
+                handleSearch(); // Call the search function
+            }
+        });
+
+        // Refresh page when search bar is cleared
+        searchInput.addEventListener('input', function () {
+            if (this.value.trim() === "") {
+                location.reload();
+            }
+        });
+
+        document.querySelectorAll('.dropdown-item[data-service]').forEach(item => {
+            item.addEventListener('click', function () {
+                const service = this.getAttribute('data-service');
+                serviceTooltip.innerText = service;
+                serviceTooltip.style.display = 'block';
+                const filteredDoctors = doctors.filter(doctor => doctor.designation === service);
+                displayDoctors(filteredDoctors);
+            });
+        });
+
+        document.querySelectorAll('.dropdown-item[data-doctor]').forEach(item => {
+            item.addEventListener('click', function () {
+                const doctor = this.getAttribute('data-doctor');
+                doctorTooltip.innerText = doctor;
+                doctorTooltip.style.display = 'block';
+                const filteredDoctors = doctors.filter(d => d.name === doctor);
+                displayDoctors(filteredDoctors);
+            });
+        });
+
+        // Show all doctors when the dropdown button is clicked
+        document.getElementById('dropdownDoctors').addEventListener('click', function () {
+            displayDoctors(doctors);
+        });
+
+        // Show all doctors when the service dropdown is clicked
+        document.getElementById('dropdownService').addEventListener('click', function () {
+            displayDoctors(doctors);
+        });
+
+        // Display all doctors by default
+        displayDoctors(doctors);
+
+        document.querySelectorAll('.dropdown-item[data-service]').forEach(item => {
+            item.addEventListener('click', function (event) {
+                event.preventDefault(); // Prevent page jump
+                const service = this.getAttribute('data-service');
+                serviceTooltip.innerText = service;
+                serviceTooltip.style.display = 'block';
+                const filteredDoctors = doctors.filter(doctor => doctor.designation === service);
+                displayDoctors(filteredDoctors);
+            });
+        });
+
+        document.querySelectorAll('.dropdown-item[data-doctor]').forEach(item => {
+            item.addEventListener('click', function (event) {
+                event.preventDefault(); // Prevent page jump
+                const doctor = this.getAttribute('data-doctor');
+                doctorTooltip.innerText = doctor;
+                doctorTooltip.style.display = 'block';
+                const filteredDoctors = doctors.filter(d => d.name === doctor);
+                displayDoctors(filteredDoctors);
+            });
+        });
+
+        document.getElementById('resetFilters').addEventListener('click', function () {
+            // Hide tooltips (if any)
+            serviceTooltip.style.display = 'none';
+            doctorTooltip.style.display = 'none';
+
+            // Reset search input if needed
+            searchInput.value = '';
+
+            // Display all doctors again
+            displayDoctors(doctors);
+        });
+
+        const textSearchButton = document.getElementById('textSearchButton');
+        const iconSearchButton = document.getElementById('iconSearchButton');
+
+        textSearchButton.addEventListener('click', handleSearch);
+        iconSearchButton.addEventListener('click', handleSearch);
+
+
+    </script>
+
+</body>
+
+</html>
